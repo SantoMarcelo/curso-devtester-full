@@ -1,0 +1,8 @@
+source 'https://rubygems.org'
+
+gem 'capybara'
+gem 'cucumber'
+gem 'httparty'
+gem 'mongo'
+gem 'rspec'
+gem 'selenium-webdriver'

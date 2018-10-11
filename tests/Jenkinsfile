@@ -1,0 +1,26 @@
+pipeline {
+    agent {
+        docker {
+            image 'ruby'
+            args '--link selenium'
+        }
+    }
+    stages {
+        stage('Preparation') {
+            steps {
+                sh "cd tests; bundle install"
+            }
+        }
+        stage('Run Tests') {
+            steps {
+                script {
+                    try {
+                        sh "cd tests; cucumber -p ci -t @smoke"
+                    } finally {
+                        cucumber fileIncludePattern: '**/*.json', jsonReportDirectory: 'tests/log', reducingMethod: 'NONE', sortingMethod: 'ALPHABETICAL'
+                    }
+                }       
+            }
+        }
+    }
+}
